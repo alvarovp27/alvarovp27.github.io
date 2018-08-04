@@ -1,0 +1,42 @@
+---
+layout: archive
+author_profile: true
+entries_layout: grid
+header:
+  overlay_image: assets/images/home-header.png
+  overlay_filter: 0.5
+excerpt: "Software Engineer. Big Data Enthusiast."
+---
+
+
+{% capture written_label %}'None'{% endcapture %}
+
+{% for collection in site.collections %}
+  {% unless collection.output == false or collection.label != "portfolio" %}
+    {% capture label %}{{ collection.label }}{% endcapture %}
+    {% if label != written_label %}
+      <!--<h2 id="{{ label | slugify }}" class="archive__subtitle">{{ label }}</h2>-->
+      <h2 id="{{ label | slugify }}" class="archive__subtitle">Portfolio</h2>
+      {% capture written_label %}{{ label }}{% endcapture %}
+    {% endif %}
+  {% endunless %}
+  
+  <div class="grid__wrapper">
+  {% for post in collection.docs %}
+    {% unless collection.output == false or collection.label == "posts" %}
+      {% include archive-single.html type="grid" %}
+    {% endunless %}
+  {% endfor %}
+  </div>
+{% endfor %}
+
+
+<h2 id="{{ label | slugify }}" class="archive__subtitle">Recent posts</h2>
+
+<div class="grid__wrapper">
+  {% for post in paginator.posts %}
+    {% include archive-single.html type="grid" %}
+  {% endfor %}
+
+  {% include paginator.html %}
+</div>
